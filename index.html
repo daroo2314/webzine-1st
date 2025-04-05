@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SORI LETTER</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 10px 5px;
+            background-image: url('https://image.utoimage.com/preview/cp872102/2017/08/201708004470_500.jpg');
+            padding: 5px;
+            border: 1px solid #7e7e7e9d;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.151);
+            position: relative;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        /* Feature Image Section */
+        .feature-image {
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        /* Photo Review Section */
+        .photo-review {
+            padding: 20px;
+        }
+        
+        .review-content {
+            display: flex;
+            flex-direction: row; /* 항상 가로 방향으로 설정 */
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .review-image-left {
+            flex: 1;
+            min-width: 0; /* 이미지가 부모 컨테이너를 넘지 않도록 설정 */
+        }
+        
+        .review-image-right {
+            flex: 1;
+            position: relative;
+            min-width: 0; /* 이미지가 부모 컨테이너를 넘지 않도록 설정 */
+        }
+        
+        .review-image-left img,
+        .review-image-right img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .more-button {
+            display: inline-block;
+            padding: 8px 25px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            margin-right: 35%;
+            float: inline-end;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .more-button:hover, .more-button:focus {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .more-button:active {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(0);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+        }
+
+         /* Comments board section */
+         .comments-board {
+            margin: 20px 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        .comments-board h3 {
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .comments-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .comment-item {
+            padding: 10px;
+            border-bottom: 1px dotted #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .commenter-name {
+            font-weight: bold;
+        }
+        
+        .comment-date {
+            color: #888;
+            font-size: 0.8em;
+        }
+        
+        .comment-text {
+            font-size: 0.95em;
+        }
+        
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .comment-form input,
+        .comment-form textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .comment-form button {
+            background-color: #5D3A1A;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        
+        .comment-form button:hover {
+            background-color: #7D5A3A;
+        }
+        
+        /* Sponsors section */
+        .sponsors {
+            margin: 20px 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        
+        .sponsors h3 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .sponsor-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        
+        .sponsor-link {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            width: 80px;
+            height: 80px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .sponsor-link:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer section */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 10px;
+        }
+        
+        .footer-links {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.8rem;
+            text-align: center;
+            color: #aaa;
+        }
+        
+        
+        /* Media Query for desktop */
+        @media screen and (min-width: 768px) {
+            .container {
+                max-width: 1000px;
+                margin: 10px auto;
+            }
+        }
+        
+        /* 모바일 화면에서 이미지 크기 조정 */
+        @media screen and (max-width: 767px) {
+            .review-content {
+                gap: 10px; /* 모바일에서는 간격을 좁힘 */
+            }
+            
+            /* .more-button {
+                padding: 6px 15px;
+                font-size: 0.7rem;
+            }  */
+            .more-button {
+                padding: 3px 6px; /* 모바일에서 버튼 크기 더 작게 조정 */
+                font-size: 0.6rem; /* 글꼴 크기도 더 작게 */
+                margin-top: 2px; /* 상단 여백 줄임 */
+            }
+
+            .comments-board, .sponsors {
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="social-icons">
+                <a href="#"><span>☰</span></a>
+                <a href="#"><span>📷</span></a>
+                <a href="#"><span>f</span></a>
+                <a href="#"><span>🔍</span></a>
+                <a href="#"><span>💬</span></a>
+            </div>
+        </header>
+  
+        <!-- Feature Image Section 1 -->
+        <div class="feature-image">
+            <img src="https://blog.kakaocdn.net/dn/cosKXH/btsM7hfxMUI/D7is7hfyTZSsJOgFwBe7KK/img.png" alt="Christmas Decorations">
+        </div>
+        
+        <!-- Banner Image Section 2 -->
+        <div class="feature-image">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcD12RC%2FbtsNae33krC%2FH2Uk9MTXZ3VsNKp7Z2O3rK%2Fimg.png" alt="SORI PHOTO REVIEW Banner">
+        </div>
+        
+        <!-- Photo Review Section1 -->
+        <section class="photo-review">
+            <div class="review-content">
+                <div class="review-image-left">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FoQlaT%2FbtsM6YnHnEi%2FRdCaUAtzI64ChPR6zYy9Yk%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FoQlaT%2FbtsM6YnHnEi%2FRdCaUAtzI64ChPR6zYy9Yk%2Fimg.png" alt="Traditional Korean Ceremony">
+                    </a>
+                    <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w4_c&wr_id=1" class="more-button">MORE →</a>
+                </div>
+                <div class="review-image-right">
+                    <a href="https://blog.kakaocdn.net/dn/b0SyUJ/btsM67EjRUY/LVqA2k2ovbaxT7moS8dTh1/img.png">
+                        <img src="https://blog.kakaocdn.net/dn/b0SyUJ/btsM67EjRUY/LVqA2k2ovbaxT7moS8dTh1/img.png" alt="Traditional Korean Performance">
+                    </a>
+                </div>
+            </div>
+        </section>
+     <!-- Photo Review Section2 -->
+<section class="photo-review">
+    <div class="review-content">
+        <div class="review-image-left">
+            <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FctEr3P%2FbtsM6n2svIj%2FTV4PibCBOjDYq0AytKYEK1%2Fimg.jpg"><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FctEr3P%2FbtsM6n2svIj%2FTV4PibCBOjDYq0AytKYEK1%2Fimg.jpg" alt="일고오창창"></a>
+            <a href="https://www.ntok.go.kr/ntok/pm/prfmng/performanceDetail.do?perfId=266912&mi=21008" class="more-button">MORE →</a>
+        </div>
+        <div class="review-image-right">
+            <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcqmPXw%2FbtsM65Uzw4j%2FQZqJhXPOwfAzT5AJko13J0%2Fimg.jpg"><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcqmPXw%2FbtsM65Uzw4j%2FQZqJhXPOwfAzT5AJko13J0%2Fimg.jpg" alt="Traditional Korean Performance"></a>
+            <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w4_c&wr_id=1" class="more-button">MORE →</a>
+        </div>
+    </div>
+  </section>
+        <!-- Photo Review Section3 -->
+        <section class="photo-review">
+            <div class="review-content">
+                <div class="review-image-left">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdCbu3q%2FbtsM6eEDWo8%2FRYpgaKtx9fXsAY8Ika22m1%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdCbu3q%2FbtsM6eEDWo8%2FRYpgaKtx9fXsAY8Ika22m1%2Fimg.png" alt="maru">
+                    </a>
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdCbu3q%2FbtsM6eEDWo8%2FRYpgaKtx9fXsAY8Ika22m1%2Fimg.png" class="more-button">MORE →</a>
+                </div>
+                <div class="review-image-right">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpXSdr%2FbtsM8DC3pg2%2Fps5pN4lbuemPCkMhnPaJ40%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpXSdr%2FbtsM8DC3pg2%2Fps5pN4lbuemPCkMhnPaJ40%2Fimg.png">
+                    </a>
+                    <a href="http://bit.ly/2025kcf" class="more-button">MORE →</a>
+                </div>
+            </div>
+        </section>
+        <!-- Photo Review Section4 -->
+        <section class="photo-review">
+            <div class="review-content">
+                <div class="review-image-left">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbqET7U%2FbtsM8t1qpaK%2FX7dFZLPYzoKXPmEk7k5OKK%2Fimg.png">
+                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbqET7U%2FbtsM8t1qpaK%2FX7dFZLPYzoKXPmEk7k5OKK%2Fimg.png" alt="Traditional Korean Ceremony">
+                 
+                </div>
+                <div class="review-image-right">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvm9dW%2FbtsM8X8NEJl%2F1QCF2KuN4PQlzL0QEb6qBK%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvm9dW%2FbtsM8X8NEJl%2F1QCF2KuN4PQlzL0QEb6qBK%2Fimg.png">
+                    </a>
+                    <a href="http://bit.ly/2025kcf" class="more-button">MORE →</a>
+                </div>
+            </div>
+        </section>
+        <div class="feature-image">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbuFski%2FbtsM9EoM2F2%2FiiVYVHRMmnR1LE1DyLEN01%2Fimg.png" alt="Christmas Decorations">
+        </div>
+        <section class="photo-review">
+            <div class="review-content">
+                <div class="review-image-left">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc2vV0W%2FbtsM8suZF8y%2FZQN7QTdSaKZMn4GcEKCT0K%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc2vV0W%2FbtsM8suZF8y%2FZQN7QTdSaKZMn4GcEKCT0K%2Fimg.png" alt="Traditional Korean Ceremony">
+                    </a>
+                    <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w4_c&wr_id=1" class="more-button">MORE →</a>
+                </div>
+                <div class="review-image-right">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcvBicH%2FbtsM8PiTqL1%2FJpEqebalZ2UeF2k2nyDyU0%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcvBicH%2FbtsM8PiTqL1%2FJpEqebalZ2UeF2k2nyDyU0%2Fimg.png">
+                    </a>
+                </div>
+            </div>
+        </section>
+        <div class="feature-image">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbEdXCk%2FbtsM9Z0nZ5W%2FkzkfknZKOShwt3CLdeP30K%2Fimg.png">
+        </div>
+        <section class="photo-review">
+            <div class="review-content">
+                <div class="review-image-left">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuU4SV%2FbtsM9JpYxNr%2FeGlZyI7d1WKWGoKK93a7pK%2Fimg.png">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuU4SV%2FbtsM9JpYxNr%2FeGlZyI7d1WKWGoKK93a7pK%2Fimg.png" alt="Traditional Korean Ceremony">
+                    </a>
+                    <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w4_c&wr_id=1" class="more-button">MORE →</a>
+                </div>
+                <div class="review-image-right">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FciDh3p%2FbtsM8NfUzk9%2FwVO4lkwb97SWw2CVCsMZY0%2Fimg.png" alt="pansori_text"><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FciDh3p%2FbtsM8NfUzk9%2FwVO4lkwb97SWw2CVCsMZY0%2Fimg.png"></a>
+                    
+                </div>
+            </div>
+        </section>
+        <div class="feature-image">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblTNAL%2FbtsM9uNy2u3%2Fwu5jKhnm46nj1Ps9PIdQL0%2Fimg.png">
+        </div>
+        <div class="feature-image">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FeGWOdW%2FbtsM9Kwp9GM%2FQOjII3yRjl9sVrpB9uK9x1%2Fimg.png">
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="review-image-left">
+            <a href="https://blog.kakaocdn.net/dn/cnraTx/btsNaDXrglr/jCUqkMqSTfoKU5xUyic8ik/img.png">
+                <img src="https://blog.kakaocdn.net/dn/bzh4Lx/btsM9Dxw1t7/6qsitht8LazIUReigU3Fh1/img.png" alt="lik kim">
+            </a>
+            <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcvxLKz%2FbtsMWZTOo2Z%2FaE24LCuyyXO3pVK6lsAmQk%2Fimg.jpg" class="more-button" style="position: relative; right: 35%;">MORE →</a>
+        </div>
+        <div class="feature-image">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcXCAka%2FbtsM9fiXK88%2FOOJ6nXwP43KyvKvXYZ8o00%2Fimg.png">
+        </div>
+        <div class="feature-image">
+            <img src="https://blog.kakaocdn.net/dn/bo5ljX/btsNbiSxATE/5kx2PJu6oLSNkUnYvlPj7K/img.png">
+        </div>
+        <br>
+        
+        <div class="photo-grid">
+            <div class="grid-row">
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbZdfe4%2FbtsM9v7ugoI%2FQZcgk7Yi8JHUPOBkEXQ4Wk%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbZdfe4%2FbtsM9v7ugoI%2FQZcgk7Yi8JHUPOBkEXQ4Wk%2Fimg.jpg">
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEDTZ0%2FbtsM9AnfLQI%2FkNIOXhJC8K1Vdtq4Y1uSUK%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEDTZ0%2FbtsM9AnfLQI%2FkNIOXhJC8K1Vdtq4Y1uSUK%2Fimg.jpg">
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNZY2V%2FbtsNbbMCxCR%2FNWolRBNkxlkuxtsa5jdEC0%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNZY2V%2FbtsNbbMCxCR%2FNWolRBNkxlkuxtsa5jdEC0%2Fimg.jpg">
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWaUaE%2FbtsNaATWJs5%2F9GYwYRcj5d10KEqOGUCQfk%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWaUaE%2FbtsNaATWJs5%2F9GYwYRcj5d10KEqOGUCQfk%2Fimg.jpg">
+                    </a>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcl46sD%2FbtsNazUYd8H%2FKRqRJZ1YOEKTTZokDAerIk%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcl46sD%2FbtsNazUYd8H%2FKRqRJZ1YOEKTTZokDAerIk%2Fimg.jpg">
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FA7JqH%2FbtsNai62QP3%2Fs3130wxpMTRl2Gvc1gybT1%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FA7JqH%2FbtsNai62QP3%2Fs3130wxpMTRl2Gvc1gybT1%2Fimg.jpg">
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FTuSHL%2FbtsNaIxnykW%2FsEAUvadUcV9DsvHc7CVcpK%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FTuSHL%2FbtsNaIxnykW%2FsEAUvadUcV9DsvHc7CVcpK%2Fimg.jpg">
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb5FZR3%2FbtsNaL8Dyot%2FRK6qUqOWhfA5wsOaSSUmyK%2Fimg.jpg">
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb5FZR3%2FbtsNaL8Dyot%2FRK6qUqOWhfA5wsOaSSUmyK%2Fimg.jpg">
+                    </a>
+                </div>
+                <div style="text-align: center; width: 100%; display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+                    <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w4_c&wr_id=1" class="more-button" style="margin: auto;">MORE →</a>
+                </div>
+            </div>
+            <div class="feature-image">
+                <img src="https://blog.kakaocdn.net/dn/cprnzf/btsNaFud9Px/ALxs34eYbMwDqID9kCF9j1/img.png">
+            </div>
+            <div class="feature-image">
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJbT8b%2FbtsM9K4mk4C%2FjV8ibyTQf2ev4AK8rktkBK%2Fimg.png">
+            </div>
+            <div class="feature-image">
+                <a href="http://daroousa.com/bbs/board.php?bo_table=w5_c&wr_id=1">
+                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FctWH4t%2FbtsNaDQDMlr%2FZHCrjNc1exMQbHoqH8flx1%2Fimg.png" style="width: 40%; margin: 0 auto; display: block; transition: transform 0.3s ease; border: 1px solid #7c7c7c; box-shadow: 0 3px 5px rgba(0,0,0,0.1);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                </a>
+            </div>
+            <div class="feature-image">
+                <img src="https://blog.kakaocdn.net/dn/bT72G3/btsNbf9orqp/lHcZyjuu9rvoLWhgW3rUzK/img.png">
+            </div>
+            <div class="review-image-left">
+                <a href="https://blog.kakaocdn.net/dn/cnraTx/btsNaDXrglr/jCUqkMqSTfoKU5xUyic8ik/img.png">
+                    <img src="https://blog.kakaocdn.net/dn/cnraTx/btsNaDXrglr/jCUqkMqSTfoKU5xUyic8ik/img.png" alt="Traditional Korean Ceremony">
+                </a>
+                <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w2_c&wr_id=2" class="more-button" style="position: relative; right: 35%;">MORE →</a>
+            </div>
+            <br>
+            <br>
+            <style>
+                .photo-grid {
+                    width: calc(100% - 40px);
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 0 20px;
+                }
+                
+                .grid-row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    margin-bottom: 20px;
+                }
+                
+                .grid-item {
+                    flex: 1;
+                    min-width: calc(25% - 15px);
+                }
+                
+                .grid-item img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                }
+                
+                @media screen and (max-width: 768px) {
+                    .photo-grid {
+                        width: calc(100% - 10px);
+                        padding: 0 5px;
+                    }
+                    .grid-item {
+                        min-width: calc(50% - 10px);
+                    }
+                }
+            </style>
+        </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    
+
+         <!-- Comments Board Section -->
+         <div class="comments-board">
+            <h3>Comments</h3>
+            <ul class="comments-list">
+                <li class="comment-item">
+                    <div class="comment-header">
+                        <span class="commenter-name">Sarah Kim</span>
+                        <span class="comment-date">2025.03.28</span>
+                    </div>
+                    <p class="comment-text">I attended the Lunar New Year event and it was absolutely beautiful! Looking forward to the upcoming Roar Festival.</p>
+                </li>
+                <li class="comment-item">
+                    <div class="comment-header">
+                        <span class="commenter-name">John Park</span>
+                        <span class="comment-date">2025.03.27</span>
+                    </div>
+                    <p class="comment-text">My daughter is in the afterschool program and she loves learning about Korean traditional music. Thank you Daroo!</p>
+                </li>
+                <li class="comment-item">
+                    <div class="comment-header">
+                        <span class="commenter-name">Michael Lee</span>
+                        <span class="comment-date">2025.03.25</span>
+                    </div>
+                    <p class="comment-text">Seo Yunwoon's performance last month was incredible. She's truly dedicated to preserving our cultural heritage.</p>
+                </li>
+            </ul>
+            <form class="comment-form">
+                <input type="text" placeholder="Your Name" required>
+                <textarea placeholder="Leave a comment..." rows="3" required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+        
+        <!-- Sponsors Section -->
+        <div class="sponsors">
+            <h3>Our Sponsors</h3>
+            <div class="sponsor-links">
+                <a href="https://www.jayonefoods.com/" class="sponsor-link"><img style="width:100%" src="https://cdn.prod.website-files.com/632e04672ab2722f7379dacc/634da1097df5617954b93ebe_Jayone_Logo-p-500.png"></a>
+                <a href="https://hswus.com/?srsltid=AfmBOoqGDNnBULe62SPJQ27Y15YPoZFEf93KLmoc-c-epl_dvXhMOCf4" class="sponsor-link"><img style="width:100%" src="https://hswus.com/cdn/shop/files/main_logo_2_54f29268-864f-40a5-8284-b7f849d3e7d5_300x.png?v=1615322363"></a>
+                <a href="#" class="sponsor-link"><img style="width:100%" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdnnpfD%2FbtsM7ZtGNQ9%2FWP5E9wkKKouWJJtkU6BkZ1%2Fimg.png"></a>
+                <a href="#" class="sponsor-link">문화체육관광부</a>
+                <a href="#" class="sponsor-link">K-Arts</a>
+            </div>
+        </div>
+        
+        <!-- Footer Section -->
+        <div class="footer">
+            <div class="footer-links">
+                <strong>DAROO Newsletter</strong> [
+                <a href="http://bit.ly/Roar-Festival"><span class="icon"></span>Roar Festival</a> |
+                <a href="http://kukakusa.com"><span class="icon"></span>Kukak Festival</a> |
+                <a href="https://www.instagram.com/roarculturalfestival/"><span class="icon"></span>Instagram</a> |
+                <a href="http://daroousa.com/en"><span class="icon"></span>Aboutus</a>
+                ]
+            </div>
+            <div class="copyright">
+                Copyright 2012-2025 &copy; Daroo Performing Arts and Culture All Rights Reserved
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
