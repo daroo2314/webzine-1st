@@ -702,27 +702,42 @@
         </div>
         
         <script type="module">
-            // Firebase SDK 모듈 가져오기
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-            import { getFirestore, collection, addDoc, orderBy, query, onSnapshot, Timestamp, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-            
-            // Firebase 구성
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+            import { getFirestore, collection, addDoc, orderBy, query, onSnapshot, Timestamp, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+            // Your web app's Firebase configuration
             const firebaseConfig = {
                 apiKey: "AIzaSyCyJgypKQTFLKZ-gfcNk9UO4WFF0bYOOwU",
                 authDomain: "daroo-webzine-board.firebaseapp.com",
+                databaseURL: "https://daroo-webzine-board-default-rtdb.firebaseio.com",
                 projectId: "daroo-webzine-board",
-                storageBucket: "daroo-webzine-board.appspot.com",
+                storageBucket: "daroo-webzine-board.firebasestorage.app",
                 messagingSenderId: "245538645575",
                 appId: "1:245538645575:web:b761c5f951830f77747362",
                 measurementId: "G-V9VNDLDYG4"
             };
-            
-            // Firebase 초기화
+
+            // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
             const db = getFirestore(app);
             
+            // 관리자 상태 변수 추가
+            let isAdmin = false;
+            
+            // 간단한 해시 함수 추가
+            function simpleHash(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // 32비트 정수로 변환
+                }
+                return hash.toString();
+            }
+
             // 댓글 추가 및 업데이트 처리
             document.getElementById('commentForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -740,7 +755,7 @@
                     const passwordHash = simpleHash(password);
                     
                     // 댓글 추가
-                    const docRef = await addDoc(collection(db, 'comments'), {
+                    await addDoc(collection(db, 'comments'), {
                         name: name,
                         text: text,
                         date: Timestamp.now(),
@@ -755,8 +770,8 @@
                 }
             });
 
-            // 댓글 수정 함수
-            async function editComment(commentId) {
+            // 댓글 수정 함수를 전역으로 등록
+            window.editComment = async function(commentId) {
                 const commentDoc = doc(db, 'comments', commentId);
                 const commentSnapshot = await getDoc(commentDoc);
                 
@@ -804,7 +819,44 @@
                         alert('비밀번호가 일치하지 않습니다.');
                     }
                 };
-            }
+            };
+
+            // 댓글 삭제 함수 전역으로 등록
+            window.deleteComment = async function(commentId) {
+                const password = prompt('댓글을 삭제하려면 비밀번호를 입력하세요:');
+                if (!password) return;
+                
+                try {
+                    const commentDoc = doc(db, 'comments', commentId);
+                    const commentSnapshot = await getDoc(commentDoc);
+                    
+                    if (!commentSnapshot.exists()) {
+                        alert('댓글을 찾을 수 없습니다.');
+                        return;
+                    }
+                    
+                    const comment = commentSnapshot.data();
+                    const passwordHash = simpleHash(password);
+                    
+                    // 관리자이거나 비밀번호가 일치하는 경우만 삭제 허용
+                    if (isAdmin || passwordHash === comment.passwordHash) {
+                        await deleteDoc(commentDoc);
+                        alert('댓글이 삭제되었습니다.');
+                    } else {
+                        alert('비밀번호가 일치하지 않습니다.');
+                    }
+                } catch (error) {
+                    console.error('댓글 삭제 중 오류: ', error);
+                    alert('댓글 삭제 중 오류가 발생했습니다.');
+                }
+            };
+
+            // 수정 취소 함수 전역으로 등록
+            window.cancelEdit = function(commentId) {
+                const commentItem = document.getElementById(`comment-${commentId}`);
+                const editForm = commentItem.querySelector('.edit-form');
+                editForm.style.display = 'none';
+            };
 
             // 댓글 목록 새로고침 함수
             function refreshComments() {
@@ -863,6 +915,25 @@
             
             // 초기 댓글 로드
             refreshComments();
+            
+            // 관리자 로그인 기능
+            document.getElementById('adminLoginBtn').addEventListener('click', function() {
+                document.getElementById('adminPanel').style.display = 'block';
+            });
+            
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                const adminPassword = document.getElementById('adminPassword').value;
+                // 여기에 실제 관리자 비밀번호 해시 비교 로직을 추가할 수 있습니다
+                const adminPasswordHash = simpleHash('admin1234'); // 예시 비밀번호 'admin1234'
+                
+                if (simpleHash(adminPassword) === adminPasswordHash) {
+                    isAdmin = true;
+                    alert('관리자로 로그인되었습니다.');
+                    document.getElementById('adminPanel').style.display = 'none';
+                } else {
+                    alert('관리자 비밀번호가 일치하지 않습니다.');
+                }
+            });
         </script>
 </body>
 </html>
