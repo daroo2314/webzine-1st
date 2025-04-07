@@ -162,6 +162,7 @@
        .comment-date {
            color: #888;
            font-size: 0.8em;
+           margin-right: 40px;
        }
        
        .comment-text {
@@ -173,6 +174,9 @@
            position: absolute;
            top: 10px;
            right: 10px;
+           opacity: 1;
+        
+           
        }
        
        .edit-btn, .delete-btn {
@@ -415,6 +419,45 @@
             max-height: 100%;
             object-fit: cover;
         }
+
+        /* 액션 메뉴 아이콘 스타일 */
+        .action-menu-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* 액션 메뉴 스타일 */
+        .action-menu {
+            display: none;
+            position: absolute;
+            right: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .menu-item {
+            display: block;
+            width: 100%;
+            padding: 8px 10px;
+            text-align: left;
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* 구분선 추가 */
+        .menu-item:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
     </style>
 </head>
 <body>
@@ -422,10 +465,12 @@
         <!-- Header Section -->
         <header>
             <div class="social-icons" style="display: flex; gap: 10px; margin-right: 10px; margin-bottom: 0; flex-wrap: nowrap; justify-content: flex-end; width: 40%;">
+                           
                 <a href="http://bit.ly/Roar-Festival"><img src="https://blog.kakaocdn.net/dn/qUe7d/btsNaHewqth/JiybcKazkr513p1dhKXWhK/img.png" style="width: 3rem; height: auto; max-width: 100%;"></a>
                 <a href="http://kukakusa.com"><img src="https://blog.kakaocdn.net/dn/baYpLb/btsNa7jFkBI/o4bTH2lbrhCiEgfdKj5zy0/img.png" style="width: 3rem; height: auto; max-width: 100%;"></a>
                 <a href="https://www.instagram.com/roarculturalfestival"><img src="https://img.lovepik.com/png/20231104/instagram-social-platform-icon-emoticon-meta-Logo_482603_wh860.png" style="width: 3rem; height: auto; max-width: 100%;"></a>
                 <a href="https://www.youtube.com/@darookoreanperformingartsa3690"><img src="https://cdn.iconscout.com/icon/free/png-256/free-youtube-268-721990.png?f=webp" style="width: 3rem; height: auto; max-width: 100%;"></a>
+                <a href="https://www.tiktok.com/@roarculturalfestival?_t=ZP-8vK5VQweO5f&_r=1"><img src="https://img.freepik.com/premium-psd/tik-tok-icon-isolated-white-background-tiktok-logo-social-media-app-square-button-logo-sign_989822-4875.jpg?w=360" style="width: 3rem; height: auto; max-width: 100%;"></a>
             </div>
         </header>
   
@@ -700,6 +745,41 @@
                 </div>
             </div>
         </div>
+         <!-- Sponsors Section -->
+         <div class="sponsors">
+            <h3>Our Sponsors</h3>
+            <div class="sponsor-links">
+                <a href="https://arts.ca.gov/" class="sponsor-link"><img style="width:100%" src="https://arts.ca.gov/wp-content/uploads/2020/10/Logo-Full-Color_RGB.jpg"></a>
+                <a href="https://arts.ca.gov/" class="sponsor-link"><img style="width:100%" src="https://arts.ca.gov/wp-content/uploads/2020/10/Logo-Full-Color_RGB.jpg"></a>
+                <a href="https://arts.ca.gov/" class="sponsor-link"><img style="width:100%" src="https://arts.ca.gov/wp-content/uploads/2020/10/Logo-Full-Color_RGB.jpg"></a>
+                <a href="https://arts.ca.gov/" class="sponsor-link"><img style="width:100%" src="https://arts.ca.gov/wp-content/uploads/2020/10/Logo-Full-Color_RGB.jpg"></a>
+                <a href="https://hswus.com/?srsltid=AfmBOoqGDNnBULe62SPJQ27Y15YPoZFEf93KLmoc-c-epl_dvXhMOCf4" class="sponsor-link"><img style="width:100%" src="https://hswus.com/cdn/shop/files/main_logo_2_54f29268-864f-40a5-8284-b7f849d3e7d5_300x.png?v=1615322363"></a>
+                <a href="https://kofice.or.kr/" class="sponsor-link"><img style="width:100%" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdnnpfD%2FbtsM7ZtGNQ9%2FWP5E9wkKKouWJJtkU6BkZ1%2Fimg.png"></a>
+                <a href="https://www.mcst.go.kr/kor/main.jsp/" class="sponsor-link"><img style="width:100%" src="https://i.namu.wiki/i/AHpW_yc6ZXlIgZOMN8-nRKIQuyOJlvSb57X8pv_UM9tWITKIjtyRSYqI8ypZSgDRFiewyHDwIbNJ7HUeLgvE6g.svg"></a>
+                <a href="https://www.jayonefoods.com/" class="sponsor-link"><img style="width:100%" src="https://cdn.prod.website-files.com/632e04672ab2722f7379dacc/634da1097df5617954b93ebe_Jayone_Logo-p-500.png"></a>
+                <a href="https://hswus.com/?srsltid=AfmBOoqGDNnBULe62SPJQ27Y15YPoZFEf93KLmoc-c-epl_dvXhMOCf4" class="sponsor-link"><img style="width:100%" src="https://hswus.com/cdn/shop/files/main_logo_2_54f29268-864f-40a5-8284-b7f849d3e7d5_300x.png?v=1615322363"></a>
+                <a href="https://kofice.or.kr/" class="sponsor-link"><img style="width:100%" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdnnpfD%2FbtsM7ZtGNQ9%2FWP5E9wkKKouWJJtkU6BkZ1%2Fimg.png"></a>
+                
+            </div>
+        </div>
+        
+        <!-- Footer Section -->
+        <div class="footer">
+            <div class="footer-links">
+                <strong>DAROO WEBZINE</strong> [
+                <a href="http://bit.ly/Roar-Festival"><span class="icon"></span>Roar Festival</a> |
+                <a href="http://kukakusa.com"><span class="icon"></span>Kukak Festival</a> |
+                <a href="https://www.instagram.com/roarculturalfestival/"><span class="icon"></span>Instagram</a> |
+                <a href="http://daroousa.com/en/bbs/board.php?bo_table=en_w1_c&wr_id=2"><span class="icon"></span>Aboutus</a> |
+                <a href="mailto:lapansori@gmail.com"><span class="icon"></span>Contactus</a>
+                ]
+            </div>
+            <div class="copyright">
+                Copyright 2012-2025 &copy; Daroo Performing Arts & Culture All Rights Reserved
+            </div>
+        </div>
+    </div>
+    </div>
         
         <script type="module">
             // Import the functions you need from the SDKs you need
@@ -782,26 +862,30 @@
                 
                 const comment = commentSnapshot.data();
                 
-                // 수정 폼 표시
-                const commentItem = document.getElementById(`comment-${commentId}`);
-                const editForm = commentItem.querySelector('.edit-form');
-                const textArea = editForm.querySelector('textarea');
-                textArea.value = comment.text;
-                editForm.style.display = 'block';
+                // 작성자 확인 또는 관리자 확인
+                const password = prompt('비밀번호를 입력하세요:');
+                if (!password) return;
                 
-                // 수정 폼 이벤트 리스너
-                editForm.onsubmit = async (e) => {
-                    e.preventDefault();
+                const passwordHash = simpleHash(password);
+                
+                // 관리자이거나 비밀번호가 일치하는 경우만 수정 허용
+                if (isAdmin || passwordHash === comment.passwordHash) {
+                    // 수정 폼 표시
+                    const commentItem = document.getElementById(`comment-${commentId}`);
+                    const editForm = commentItem.querySelector('.edit-form');
+                    const textArea = editForm.querySelector('textarea');
+                    textArea.value = comment.text;
+                    editForm.style.display = 'block';
                     
-                    const newText = textArea.value;
-                    const password = prompt('비밀번호를 입력하세요:');
+                    // 메뉴 닫기
+                    document.getElementById(`action-menu-${commentId}`).style.display = 'none';
                     
-                    if (!password) return;
-                    
-                    const passwordHash = simpleHash(password);
-                    
-                    // 관리자이거나 비밀번호가 일치하는 경우만 수정 허용
-                    if (isAdmin || passwordHash === comment.passwordHash) {
+                    // 수정 폼 이벤트 리스너
+                    editForm.onsubmit = async (e) => {
+                        e.preventDefault();
+                        
+                        const newText = textArea.value;
+                        
                         try {
                             await updateDoc(commentDoc, {
                                 text: newText,
@@ -815,13 +899,13 @@
                             console.error('댓글 수정 중 오류: ', error);
                             alert('댓글 수정 중 오류가 발생했습니다.');
                         }
-                    } else {
-                        alert('비밀번호가 일치하지 않습니다.');
-                    }
-                };
+                    };
+                } else {
+                    alert('비밀번호가 일치하지 않습니다.');
+                }
             };
 
-            // 댓글 삭제 함수 전역으로 등록
+            // 댓글 삭제 함수를 전역으로 등록
             window.deleteComment = async function(commentId) {
                 const password = prompt('댓글을 삭제하려면 비밀번호를 입력하세요:');
                 if (!password) return;
@@ -851,7 +935,7 @@
                 }
             };
 
-            // 수정 취소 함수 전역으로 등록
+            // 수정 취소 함수를 전역으로 등록
             window.cancelEdit = function(commentId) {
                 const commentItem = document.getElementById(`comment-${commentId}`);
                 const editForm = commentItem.querySelector('.edit-form');
@@ -898,8 +982,11 @@
                         </div>
                         <p class="comment-text">${comment.text}</p>
                         <div class="comment-actions">
-                            <button class="edit-btn" onclick="editComment('${commentId}')">수정</button>
-                            <button class="delete-btn" onclick="deleteComment('${commentId}')">삭제</button>
+                            <img style="width: 30px; height: 20px;" src="https://cdn-icons-png.flaticon.com/512/2354/2354554.png" class="action-menu-icon" onclick="showActionMenu('${commentId}')">
+                            <div class="action-menu" id="action-menu-${commentId}">
+                                <button class="menu-item" onclick="editComment('${commentId}')">수정</button>
+                                <button class="menu-item" onclick="deleteComment('${commentId}')">삭제</button>
+                            </div>
                         </div>
                         <form class="edit-form" style="display: none;">
                             <textarea rows="3" required></textarea>
@@ -934,6 +1021,20 @@
                     alert('관리자 비밀번호가 일치하지 않습니다.');
                 }
             });
+
+            // 액션 메뉴 표시/숨김 함수를 전역으로 등록
+            window.showActionMenu = function(commentId) {
+                const menu = document.getElementById(`action-menu-${commentId}`);
+                if (menu.style.display === 'block') {
+                    menu.style.display = 'none';
+                } else {
+                    // 다른 열린 메뉴 닫기
+                    document.querySelectorAll('.action-menu').forEach(m => {
+                        m.style.display = 'none';
+                    });
+                    menu.style.display = 'block';
+                }
+            };
         </script>
 </body>
 </html>
