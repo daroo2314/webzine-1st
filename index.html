@@ -539,6 +539,41 @@
         .menu-item:not(:last-child) {
             border-bottom: 1px solid #eee;
         }
+
+        .comment-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .like-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .heart-icon {
+            color: #ccc;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .heart-icon.liked {
+            color: #ff4b4b;
+            transform: scale(1.1);
+        }
+
+        .like-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .heart-icon:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
@@ -942,12 +977,12 @@
                 try {
                     const passwordHash = simpleHash(password);
                     
-                    // 댓글 추가
                     await addDoc(collection(db, 'comments'), {
                         name: name,
                         text: text,
                         date: Timestamp.now(),
-                        passwordHash: passwordHash
+                        passwordHash: passwordHash,
+                        likes: [] // 좋아요 배열 초기화
                     });
                     
                     alert('댓글이 성공적으로 제출되었습니다!');
@@ -1084,18 +1119,7 @@
                     li.id = `comment-${commentId}`;
                     
                     // 날짜 형식 변환
-                    let date = comment.date;
-                    let dateString;
-                    
-                    if (date && date.toDate) {
-                        dateString = date.toDate().toLocaleDateString();
-                    } else if (date) {
-                        dateString = new Date(date).toLocaleDateString();
-                    } else {
-                        dateString = '날짜 없음';
-                    }
-                    
-                    // 수정 표시
+                    let dateString = comment.date?.toDate().toLocaleDateString() || '날짜 없음';
                     let editedMark = comment.edited ? ' (수정됨)' : '';
                     
                     li.innerHTML = `
@@ -1104,11 +1128,17 @@
                             <span class="comment-date">${dateString}${editedMark}</span>
                         </div>
                         <p class="comment-text">${comment.text}</p>
-                        <div class="comment-actions">
-                            <img style="width: 30px; height: 20px;" src="https://cdn-icons-png.flaticon.com/512/2354/2354554.png" class="action-menu-icon" onclick="showActionMenu('${commentId}')">
-                            <div class="action-menu" id="action-menu-${commentId}">
-                                <button class="menu-item" onclick="editComment('${commentId}')">수정</button>
-                                <button class="menu-item" onclick="deleteComment('${commentId}')">삭제</button>
+                        <div class="comment-footer">
+                            <div class="like-button" onclick="toggleLike('${commentId}')">
+                                <i class="heart-icon ${comment.likes?.includes(getDeviceId()) ? 'liked' : ''}">❤</i>
+                                <span class="like-count">${comment.likes?.length || 0}</span>
+                            </div>
+                            <div class="comment-actions">
+                                <img style="width: 30px; height: 20px;" src="https://cdn-icons-png.flaticon.com/512/2354/2354554.png" class="action-menu-icon" onclick="showActionMenu('${commentId}')">
+                                <div class="action-menu" id="action-menu-${commentId}">
+                                    <button class="menu-item" onclick="editComment('${commentId}')">수정</button>
+                                    <button class="menu-item" onclick="deleteComment('${commentId}')">삭제</button>
+                                </div>
                             </div>
                         </div>
                         <form class="edit-form" style="display: none;">
@@ -1156,6 +1186,48 @@
                         m.style.display = 'none';
                     });
                     menu.style.display = 'block';
+                }
+            };
+
+            // 디바이스 ID 생성/가져오기 함수
+            function getDeviceId() {
+                let deviceId = localStorage.getItem('deviceId');
+                if (!deviceId) {
+                    deviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    localStorage.setItem('deviceId', deviceId);
+                }
+                return deviceId;
+            }
+
+            // 좋아요 토글 함수
+            window.toggleLike = async function(commentId) {
+                try {
+                    const commentDoc = doc(db, 'comments', commentId);
+                    const commentSnapshot = await getDoc(commentDoc);
+                    
+                    if (!commentSnapshot.exists()) {
+                        alert('댓글을 찾을 수 없습니다.');
+                        return;
+                    }
+                    
+                    const comment = commentSnapshot.data();
+                    const deviceId = getDeviceId();
+                    const likes = comment.likes || [];
+                    
+                    if (likes.includes(deviceId)) {
+                        // 좋아요 취소
+                        await updateDoc(commentDoc, {
+                            likes: likes.filter(id => id !== deviceId)
+                        });
+                    } else {
+                        // 좋아요 추가
+                        await updateDoc(commentDoc, {
+                            likes: [...likes, deviceId]
+                        });
+                    }
+                } catch (error) {
+                    console.error('좋아요 처리 중 오류:', error);
+                    alert('좋아요 처리 중 오류가 발생했습니다.');
                 }
             };
         </script>
